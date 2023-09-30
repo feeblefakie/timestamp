@@ -1,0 +1,62 @@
+name: Test
+
+on:
+  workflow_dispatch:
+    inputs:
+      time_zone:
+        description: 'Time zone'
+        required: true
+        default: 'Asia/Tokyo'
+        type: choice
+        options:
+          - Asia/Tokyo
+          - America/Los_Angeles
+          - UTC
+      service_type:
+        description: 'Service type'
+        required: true
+        default: 'ScalarDB_Cluster'
+        type: choice
+        options:
+          - ScalarDB_Cluster
+          - ScalarDL_Ledger
+          - ScalarDL_Auditor
+      trial_license:
+        description: 'Is this for a trial license?'
+        default: 'true'
+        required: true
+        type: boolean
+      days_to_expire:
+        description: 'Days to expire (in case of a trial license)'
+        default: 30
+        required: false
+        type: string
+      company_name:
+        description: 'Company name'
+        required: true
+        type: string
+
+jobs:
+  print:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Print the inputs to STDOUT
+        if: ${{ github.ref_name == 'main' }}
+        run: |
+          echo ${{ github.ref_name }}
+          echo ${{ inputs.time_zone }} 
+          echo ${{ inputs.service_type }}
+          echo ${{ inputs.never_expires }}
+          echo ${{ inputs.days_to_expire }}
+          echo ${{ inputs.company_name }}
+          echo ${{ inputs.company_name }} > $HOME/file
+      - name: Error
+        if: ${{ github.ref_name != 'main' }}
+        run:
+          echo "You need to use the main branch"
+          exit 1
+      - name: something
+        run: |
+          cat $HOME/file
+          pwd
+        

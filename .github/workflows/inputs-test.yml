@@ -31,6 +31,14 @@ on:
         default: 30
         required: false
         type: string
+      product_version:
+        description: 'Product version'
+        required: true
+        default: 3
+        type: choice
+        options:
+          - 3
+          - 4
       company_name:
         description: 'Company name'
         required: true
@@ -49,7 +57,7 @@ jobs:
           echo ${{ inputs.never_expires }}
           echo ${{ inputs.days_to_expire }}
           echo ${{ inputs.company_name }}
-          echo ${{ inputs.company_name }} > $HOME/file
+          echo ${{ inputs.product_version }} > $HOME/file
       - name: Error
         if: ${{ github.ref_name != 'main' }}
         run:

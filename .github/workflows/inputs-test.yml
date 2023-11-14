@@ -57,7 +57,8 @@ jobs:
           echo ${{ inputs.never_expires }}
           echo ${{ inputs.days_to_expire }}
           echo ${{ inputs.company_name }}
-          echo ${{ inputs.product_version }} > $HOME/file
+          echo ${{ inputs.product_version }}
+          echo "HELLO" > $HOME/file
       - name: Error
         if: ${{ github.ref_name != 'main' }}
         run:
